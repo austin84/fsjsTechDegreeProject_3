@@ -1,12 +1,11 @@
-// Variables
-
+// ********** Variables
 const designSelectElement = document.getElementById('design');
 const colorSelectElement = document.getElementById('color');
 const colorOptionElements = colorSelectElement.querySelectorAll('option');
 
-// ************** Job Role
+// ********** Job Role
 
-// Hide 'Other' Job Role
+// * Hide 'Other' Job Role
 const otherRole = document.getElementById('other-title');
 otherRole.style.display = 'none';
 
@@ -20,7 +19,7 @@ role.addEventListener('change', (e) => {
   }
 });
 
-// ************ T-Shirt Section
+// ********** T-Shirt Section
 
 // * Hide T-shirt Color Options Until Theme is Chosen
 colorSelectElement.style.display = 'none';
@@ -34,6 +33,7 @@ for (let i = 0; i < colorOptionElements.length; i++) {
   colorOptionElements[i].hidden = true;
 }
 
+// * Event Listener for Design Select
 designSelectElement.addEventListener('change', (e) => {
   if (designSelectElement.value === 'js puns') {
     colorPlaceholder.hidden = true;
@@ -87,7 +87,6 @@ designSelectElement.addEventListener('change', (e) => {
 });
 
 // ************ Register for Activities Section
-
 const activities = document.querySelectorAll('fieldset.activities input');
 const activitiesContainer = document.querySelector('.activities');
 const totalCostDiv = document.createElement('div');
@@ -174,6 +173,27 @@ function isValidEmail(email) {
   return /^[^@]+@[^@.]+\.[a-z]+$/i.test(email);
 }
 
+function isValidCC(ccNum) {
+  return /^[0-9]{13}[0-9]?[0-9]?[0-9]?$/.test(ccNum);
+}
+
+function isValidZip(zip) {
+  return /^[0-9]{5}$/.test(zip);
+}
+
+function isValidCVV(cvv) {
+  return /^[0-9]{3}$/.test(cvv);
+}
+
+// * Activities Validation
+const activitiesArr = Array.from(activities);
+
+function checked(arr) {
+  const array = arr.filter((activity) => activity.checked);
+  return array.length > 0;
+}
+
+// * Name Validation
 nameInput.addEventListener('keyup', (e) => {
   const value = nameInput.value;
   if (value === '' || isValidName(value)) {
@@ -188,6 +208,7 @@ nameInput.addEventListener('keyup', (e) => {
   }
 });
 
+// * Email Validation
 emailInput.addEventListener('keyup', (e) => {
   const value = emailInput.value;
   if (value === '' || isValidEmail(value)) {
@@ -202,28 +223,7 @@ emailInput.addEventListener('keyup', (e) => {
   }
 });
 
-// activities
-const activitiesArr = Array.from(activities);
-
-function checked(arr) {
-  const array = arr.filter((activity) => activity.checked);
-  return array.length > 0;
-}
-
-// credit card
-
-function isValidCC(ccNum) {
-  return /^[0-9]{13}[0-9]?[0-9]?[0-9]?$/.test(ccNum);
-}
-
-function isValidZip(zip) {
-  return /^[0-9]{5}$/.test(zip);
-}
-
-function isValidCVV(cvv) {
-  return /^[0-9]{3}$/.test(cvv);
-}
-
+// * Credit Card Validation
 function creditCardCheck() {
   const ccNum = document.querySelector('#cc-num');
   const zip = document.querySelector('#zip');
@@ -241,10 +241,10 @@ function creditCardCheck() {
 
       if (ccNum.value.length === 0) {
         ccNum.previousElementSibling.innerHTML =
-          '<em>Please Provide A Valid Credit Card Number</em>';
+          '<em>Provide A Valid Credit Card Number</em>';
       }
 
-      if (ccNum.value.length < 13) {
+      if (ccNum.value.length < 13 && ccNum.value.length > 0) {
         ccNum.previousElementSibling.innerHTML =
           '<em>Please Enter A Minimum of 13 Digits</em>';
       }
@@ -279,6 +279,7 @@ function creditCardCheck() {
   }
 }
 
+// * Event Listener for Form Submission
 const form = document.querySelector('form');
 form.addEventListener('submit', (e) => {
   e.preventDefault();
